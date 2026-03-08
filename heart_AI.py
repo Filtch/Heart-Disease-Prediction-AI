@@ -4,7 +4,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 import sys
 
-
+#Optimized by Zvalsky
 
 def input_int(prompt, min_val=None, max_val=None):
     while True:
