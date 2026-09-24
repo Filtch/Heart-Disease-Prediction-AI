@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  # 1. Layanan Database (Terisolasi)
+  database-server:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: password123
+    networks:
+      - private-internal-net # Terhubung ke jalur pribadi
+    volumes:
+      - db-data-storage:/var/lib/postgresql/data # Penyimpanan Permanen
+
+  # 2. Layanan Aplikasi (Jembatan antara User dan Database)
+  app-server:
+    image: nginx:alpine
+    ports:
+      - "8080:80" # User bisa akses lewat browser di port 8080
+    networks:
+      - private-internal-net # Bisa mengobrol dengan database
+
+networks:
+  # Definisi Jalur Pribadi (Custom Bridge)
+  private-internal-net:
+    driver: bridge
+
+volumes:
+  # Definisi Hardisk Eksternal (Named Volume)
+  db-data-storage:
